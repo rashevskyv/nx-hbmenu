@@ -1,12 +1,12 @@
 export APP_VERSION	:=	3.5.0
 
 ifeq ($(RELEASE),)
-	export APP_VERSION	:=	$(APP_VERSION)-$(shell git describe --dirty --always)
+	export APP_VERSION	:=	$(APP_VERSION)
 endif
 
 .PHONY: clean all nx pc dist-bin
 
-all: nx pc
+all: nx
 
 romfs:
 	@mkdir -p romfs
@@ -20,6 +20,7 @@ dist-bin:	romfs/assets.zip
 
 nx:	romfs/assets.zip
 	$(MAKE) -f Makefile.nx
+	@cp $(CURDIR)/nx-hbmenu.nro /mnt/e/Switch/_kefir/kefir/hbmenu.nro
 
 pc:	romfs/assets.zip
 	$(MAKE) -f Makefile.pc
